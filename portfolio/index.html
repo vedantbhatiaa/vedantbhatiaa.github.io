@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vedant Bhatia | Data Analytics Portfolio</title>
+  
+  <style>
+    /* ==================== FONTS ==================== */
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+    
+    /* ==================== DESIGN TOKENS ==================== */
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-glass: rgba(255, 255, 255, 0.03);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --text-muted: #606060;
+      --accent-blue: #0066ff;
+      --accent-cyan: #00d4ff;
+      --accent-gradient: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
+      
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 2rem;
+      --spacing-lg: 4rem;
+      --spacing-xl: 6rem;
+      
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 32px;
+      
+      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    /* ==================== RESET ==================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 80px;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* ==================== NAVIGATION ==================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 5%;
+      backdrop-filter: blur(20px);
+      background: rgba(10, 10, 10, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      position: relative;
+      transition: color 0.3s var(--transition-smooth);
+    }
+    
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-gradient);
+      transition: width 0.3s var(--transition-smooth);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    /* Active navigation link */
+    .nav-links a.active {
+      color: var(--text-primary);
+    }
+    
+    .nav-links a.active::after {
+      width: 100%;
+      background: var(--accent-gradient);
+    }
+    
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+    }
+    
+    .menu-toggle span {
+      width: 25px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+    
+    /* ==================== HERO SECTION ==================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+      scroll-snap-align: start;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-content h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    
+    .hero-content h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 600;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-content p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+    
+    .hero-image-wrapper {
+      position: relative;
+      height: 500px;
+      perspective: 1000px;
+    }
+    
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.5s var(--transition-smooth);
+    }
+    
+    .hero-image::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-lg);
+      z-index: -1;
+      opacity: 0.5;
+      filter: blur(20px);
+      transition: opacity 0.3s var(--transition-smooth);
+    }
+    
+    .hero-image:hover::before {
+      opacity: 1;
+    }
+    
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 50px;
+      font-size: 1rem;
+      transition: transform 0.3s var(--transition-spring), box-shadow 0.3s var(--transition-smooth);
+      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+    
+    /* ==================== SECTION STYLES ==================== */
+    .section {
+      padding: 6rem 5%;
+      position: relative;
+      scroll-snap-align: start;
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 4rem;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    
+    .section-title span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* ==================== EDUCATION & EXPERIENCE ==================== */
+    .timeline-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    
+    .timeline-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      padding-left: 2rem;
+      position: relative;
+    }
+    
+    .timeline-section h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+    
+    .timeline-item {
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .timeline-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
+    }
+    
+    .timeline-meta {
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-item h4 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    
+    .timeline-org {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    
+    .timeline-item p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    .timeline-item ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+    
+    .timeline-item li {
+      color: var(--text-secondary);
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    
+    .timeline-item li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+    }
+    
+    /* ==================== SKILLS ==================== */
+    .skills-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    
+    .skill-card {
+      padding: 2.5rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .skill-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .skill-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 25px 50px rgba(0, 102, 255, 0.15);
+    }
+    
+    .skill-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    
+    .skill-tag {
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .skill-tag:hover {
+      background: rgba(0, 102, 255, 0.1);
+      border-color: var(--accent-blue);
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+    
+    /* ==================== PROJECTS ==================== */
+    .projects-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+    }
+    
+    .project-card {
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 30px 60px rgba(0, 102, 255, 0.2);
+    }
+    
+    .project-image {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .project-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.6) 100%);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s var(--transition-smooth);
+    }
+    
+    .project-card:hover .project-image::before {
+      opacity: 1;
+    }
+    
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--transition-smooth);
+    }
+    
+    .project-card:hover .project-image img {
+      transform: scale(1.1);
+    }
+    
+    .project-content {
+      padding: 2rem;
+    }
+    
+    .project-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .project-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .project-tag {
+      padding: 0.4rem 0.9rem;
+      background: rgba(0, 102, 255, 0.1);
+      border: 1px solid rgba(0, 102, 255, 0.3);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-cyan);
+    }
+    
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .project-link:hover {
+      color: var(--accent-cyan);
+      transform: translateX(5px);
+    }
+    
+    /* ==================== ARTICLES ==================== */
+    .featured-research {
+      max-width: 1400px;
+      margin: 0 auto 4rem;
+      padding: 3rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(10px);
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 3rem;
+      align-items: center;
+      transition: all 0.4s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .featured-research.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .featured-research:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 25px 50px rgba(0, 102, 255, 0.15);
+    }
+    
+    .research-image {
+      width: 100%;
+      height: 250px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    
+    .research-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--transition-smooth);
+    }
+    
+    .featured-research:hover .research-image img {
+      transform: scale(1.05);
+    }
+    
+    .research-type, .article-type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    
+    .research-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .research-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    
+    .research-link, .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .research-link:hover, .article-link:hover {
+      color: var(--accent-cyan);
+      transform: translateX(5px);
+    }
+    
+    .articles-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+    
+    .article-card {
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+      display: flex;
+      gap: 2rem;
+      transition: all 0.4s var(--transition-smooth);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    
+    .article-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .article-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+    }
+    
+    .article-image {
+      width: 180px;
+      height: 180px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    
+    .article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--transition-smooth);
+    }
+    
+    .article-card:hover .article-image img {
+      transform: scale(1.1);
+    }
+    
+    .article-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    
+    .article-content p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    
+    /* ==================== CONTACT ==================== */
+    .contact-section {
+      background: var(--bg-secondary);
+    }
+    
+    .contact-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+      padding: 1rem 1.5rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      transition: all 0.3s var(--transition-smooth);
+      backdrop-filter: blur(10px);
+    }
+    
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+    
+    .contact-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    
+    .contact-links a {
+      padding: 0.8rem 1.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s var(--transition-smooth);
+    }
+    
+    .contact-links a:hover {
+      background: rgba(0, 102, 255, 0.1);
+      border-color: var(--accent-blue);
+      color: var(--accent-cyan);
+      transform: translateY(-2px);
+    }
+    
+    /* ==================== SCROLL PROGRESS ==================== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent-gradient);
+      z-index: 9999;
+      transform-origin: left;
+      transition: transform 0.1s linear;
+    }
+    
+    /* ==================== RESPONSIVE ==================== */
+    @media (max-width: 1024px) {
+      .hero-container,
+      .timeline-grid,
+      .featured-research {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-image-wrapper {
+        height: 400px;
+        order: -1;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: rgba(17, 17, 17, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 6rem 2rem 2rem;
+        gap: 1.5rem;
+        transition: right 0.4s var(--transition-smooth);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .menu-toggle {
+        display: flex;
+        z-index: 1001;
+      }
+      
+      .section {
+        padding: 4rem 5%;
+      }
+      
+      .section-title {
+        margin-bottom: 3rem;
+      }
+      
+      .hero {
+        padding: 6rem 5% 3rem;
+      }
+      
+      .skills-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .article-card {
+        flex-direction: column;
+      }
+      
+      .article-image {
+        width: 100%;
+        height: 200px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-content h2 {
+        font-size: 1.5rem;
+      }
+      
+      .hero-image-wrapper {
+        height: 300px;
+      }
+      
+      .timeline-item,
+      .skill-card,
+      .project-card {
+        padding: 1.5rem;
+      }
+      
+      .contact-links {
+        flex-direction: column;
+      }
+    }
+    
+    /* ==================== ANIMATIONS ==================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+    }
+    
+    /* Stagger delays for sequential animations */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+  
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">VB</div>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#education">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#articles">Articles</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="hero-container">
+      <div class="hero-content fade-in-up">
+        <h1>Vedant Bhatia</h1>
+        <h2>Data Analytics & Business Strategy</h2>
+        <p>
+          Data-driven analyst transforming complex datasets into actionable insights. 
+          MSc Business Analytics student at UCL with 3+ years of experience across 
+          startup operations, data science, and strategic analytics. Specialized in 
+          Python, SQL, machine learning, and ESG sustainability analytics.
+        </p>
+        <a href="Vedant_Bhatia_CV.pdf" class="btn-primary" download>
+          Download CV
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 12L3 7l1.5-1.5L7 8V0h2v8l2.5-2.5L13 7l-5 5z" fill="currentColor"/>
+            <path d="M1 14h14v2H1v-2z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+      
+      <div class="hero-image-wrapper fade-in-up stagger-2">
+        <div class="hero-image">
+          <img src="images/professional-img.jpg" alt="Vedant Bhatia">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Education & Experience -->
+  <section id="education" class="section">
+    <h2 class="section-title"><span>Experience</span> & Education</h2>
+    
+    <div class="timeline-grid">
+      <!-- Experience Column -->
+      <div class="timeline-section">
+        <h3>Professional Experience</h3>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2025 – Present</span>
+          <h4>Operations Intern</h4>
+          <p class="timeline-org">Potentia</p>
+          <ul>
+            <li>Planned and monitored multi-platform content timelines, ensuring 100% on-time delivery</li>
+            <li>Led marketing team of 8 interns, driving 60% increase in social reach and 40% higher engagement</li>
+            <li>Identified brand partnerships contributing to 15% audience reach growth</li>
+            <li>Designed company's 6-month growth roadmap, optimizing timelines by 25%</li>
+          </ul>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2024 – Present</span>
+          <h4>Founder</h4>
+          <p class="timeline-org">The Learning Curve</p>
+          <ul>
+            <li>Conducted 200+ in-depth interviews with professionals from leading companies</li>
+            <li>Built engaged student audience through data-driven content strategy</li>
+            <li>Compiled actionable career insights and job-search strategies</li>
+            <li>Established collaborations with alumni networks and student societies</li>
+          </ul>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2022 – 2025</span>
+          <h4>Operations Executive</h4>
+          <p class="timeline-org">Bhavna Roadways</p>
+          <ul>
+            <li>Redesigned workflows and SOPs, reducing turnaround time by 25%</li>
+            <li>Built KPI dashboards improving decision-making accuracy by 30%</li>
+            <li>Performed cost analysis achieving 10-15% optimization</li>
+            <li>Aligned stakeholders across leadership and execution teams</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Education Column -->
+      <div class="timeline-section">
+        <h3>Education</h3>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2025</span>
+          <h4>University College London</h4>
+          <p class="timeline-org">MSc Business Analytics</p>
+          <p>
+            Focus on predictive analytics, machine learning, data engineering, 
+            business strategy, and applied statistics using Python and R.
+          </p>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2021 – 2025</span>
+          <h4>Mumbai University</h4>
+          <p class="timeline-org">B.Eng Computer Engineering</p>
+          <p>
+            Core foundation in data structures, algorithms, databases, 
+            software engineering, and applied programming.
+          </p>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-meta">2019 – 2021</span>
+          <h4>MJ College</h4>
+          <p class="timeline-org">State Board</p>
+          <p>
+            Core foundation in Physics, Chemistry, and Mathematics.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <h2 class="section-title">Technical <span>Expertise</span></h2>
+    
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Data & Analytics</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Time Series</span>
+          <span class="skill-tag">ML Modelling</span>
+          <span class="skill-tag">Feature Engineering</span>
+          <span class="skill-tag">Statistical Analysis</span>
+        </div>
+      </div>
+      
+      <div class="skill-card">
+        <h3>Tools & Platforms</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Tableau</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Git/GitHub</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Jupyter</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+        </div>
+      </div>
+      
+      <div class="skill-card">
+        <h3>Business Strategy</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Problem Structuring</span>
+          <span class="skill-tag">Stakeholder Management</span>
+          <span class="skill-tag">Market Research</span>
+          <span class="skill-tag">Business Strategy</span>
+          <span class="skill-tag">Data Storytelling</span>
+          <span class="skill-tag">Cross-Functional Leadership</span>
+          <span class="skill-tag">ESG & Sustainability</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    
+    <div class="projects-grid">
+      <!-- Credit Risk Analysis -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/credit-risk-1.jpg" alt="Credit Risk Analysis">
+        </div>
+        <div class="project-content">
+          <h3>Credit Risk Analysis & Default Prediction</h3>
+          <p>
+            End-to-end ML pipeline to predict loan defaults using financial and 
+            demographic data, enabling better credit approval decisions with 45% 
+            improvement in accuracy.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Machine Learning</span>
+            <span class="project-tag">Finance</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/Credit_Risk_Analysis_And_Default_Prediction" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Apple Stock Prediction -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/AAPL-stock-1.jpg" alt="Apple Stock Prediction">
+        </div>
+        <div class="project-content">
+          <h3>Apple Stock Price Prediction</h3>
+          <p>
+            Time-series forecasting of AAPL stock prices using ARIMA and LSTM models 
+            to identify short-term trends and volatility with 91% prediction accuracy.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Time Series</span>
+            <span class="project-tag">LSTM</span>
+            <span class="project-tag">Deep Learning</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/AAPL_STOCK_PREDICTION" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Walmart Sales -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/walmart-sales--1.jpg" alt="Walmart Sales Analysis">
+        </div>
+        <div class="project-content">
+          <h3>Walmart Sales Analysis</h3>
+          <p>
+            Exploratory and KPI-driven analysis of retail sales data to uncover 
+            demand trends and store-level performance insights for strategic planning.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Analytics</span>
+            <span class="project-tag">EDA</span>
+            <span class="project-tag">Retail</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/Walmart_sales_analysis" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Netflix Database -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/netflix-1.jpg" alt="Netflix Database Analysis">
+        </div>
+        <div class="project-content">
+          <h3>Netflix Database Analysis</h3>
+          <p>
+            SQL-based analysis of Netflix's content catalog to extract insights 
+            on genre distribution, release trends, and platform strategy.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">SQL</span>
+            <span class="project-tag">Databases</span>
+            <span class="project-tag">Streaming</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/Netflix_DB_Analysis" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Weather Prediction -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/weather-prediction-1.jpg" alt="Weather Prediction System">
+        </div>
+        <div class="project-content">
+          <h3>Weather Prediction System</h3>
+          <p>
+            Machine learning-based weather prediction system using historical 
+            environmental data and predictive modeling techniques.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Machine Learning</span>
+            <span class="project-tag">Prediction</span>
+            <span class="project-tag">Climate</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/WeatherPredictionSystem-" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+      
+      <!-- YouTube Analytics -->
+      <div class="project-card">
+        <div class="project-image">
+          <img src="images/youtube-analytics-1.jpg" alt="YouTube Channel Intelligence">
+        </div>
+        <div class="project-content">
+          <h3>YouTube Channel Intelligence</h3>
+          <p>
+            Analytics-driven insights into YouTube channel performance and 
+            audience engagement using real-world metrics and visualization.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">Analytics</span>
+            <span class="project-tag">Visualization</span>
+            <span class="project-tag">Social Media</span>
+          </div>
+          <a href="https://github.com/vedantbhatiaa/Youtube-Channel-Intelligence" 
+             target="_blank" class="project-link">
+            View Project →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Articles & Research -->
+  <section id="articles" class="section">
+    <h2 class="section-title">Articles & <span>Research</span></h2>
+    
+    <!-- Featured Research -->
+    <div class="featured-research">
+      <div class="research-image">
+        <img src="images/gps-navigation.jpg" alt="GPS Tracking and Indoor Navigation">
+      </div>
+      <div class="research-content">
+        <span class="research-type">Research Paper</span>
+        <h3>GPS Tracking and Indoor Navigation System</h3>
+        <p>
+          Indoor navigation using graph data structures and shortest-path algorithms 
+          to determine precise location and optimal routing within buildings. Published 
+          in International Journal for Research in Applied Science & Engineering Technology.
+        </p>
+        <a href="https://www.ijraset.com/research-paper/gps-tracking-and-indoor-navigation-system" 
+           target="_blank" class="research-link">
+          Read Full Paper →
+        </a>
+      </div>
+    </div>
+    
+    <!-- Articles Grid -->
+    <div class="articles-grid">
+      <!-- Article 1 -->
+      <div class="article-card">
+        <div class="article-image">
+          <img src="images/esg-scope3.jpg" alt="Scope 3 Decarbonization">
+        </div>
+        <div class="article-content">
+          <span class="article-type">Article</span>
+          <h3>Unlocking Enterprise Value Through Targeted Scope 3 Decarbonization</h3>
+          <p>
+            Strategic exploration of Scope 3 emissions reduction and enterprise value 
+            creation through data-driven sustainability initiatives.
+          </p>
+          <a href="https://vedantbhatia.substack.com/p/unlocking-enterprise-value-through" 
+             target="_blank" class="article-link">
+            Read Article →
+          </a>
+        </div>
+      </div>
+      
+      <!-- Article 2 -->
+      <div class="article-card">
+        <div class="article-image">
+          <img src="images/esg-investing.jpg" alt="ESG Investing in Energy">
+        </div>
+        <div class="article-content">
+          <span class="article-type">Article</span>
+          <h3>ESG Investing in Energy</h3>
+          <p>
+            Data-driven ESG frameworks for sustainable investing in the energy sector, 
+            analyzing environmental, social, and governance metrics.
+          </p>
+          <a href="https://vedantbhatia.substack.com/p/esg-investing-in-energy" 
+             target="_blank" class="article-link">
+            Read Article →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Contact -->
+  <section id="contact" class="section contact-section">
+    <h2 class="section-title">Get In <span>Touch</span></h2>
+    
+    <div class="contact-container">
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+      
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/vedantbhatia09/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/vedantbhatiaa" target="_blank">GitHub</a>
+        <a href="mailto:vedantbhatiaa@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    // ==================== SCROLL ANIMATIONS ====================
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all animated elements
+    document.querySelectorAll('.timeline-item, .skill-card, .project-card, .featured-research, .article-card').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // ==================== SCROLL PROGRESS ====================
+    const scrollProgress = document.getElementById('scrollProgress');
+    
+    window.addEventListener('scroll', () => {
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (window.scrollY / windowHeight) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+    
+    // ==================== NAVBAR ALWAYS VISIBLE ====================
+    // Navbar stays fixed at top - no auto-hide behavior
+    const navbar = document.getElementById('navbar');
+    
+    // Add slight transparency on scroll for better content visibility
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+      } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+      }
+    });
+    
+    // ==================== MOBILE MENU ====================
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      }
+    });
+    
+    // ==================== SMOOTH SCROLL ====================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          // Update isScrolling flag to prevent conflicts
+          isScrolling = true;
+          
+          // Find the index of the target section
+          sections.forEach((section, index) => {
+            if (section === target) {
+              currentSection = index;
+            }
+          });
+          
+          // Scroll to target
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          
+          // Update active link immediately
+          updateActiveNavLink(target.id);
+          
+          // Reset scrolling flag
+          setTimeout(() => {
+            isScrolling = false;
+          }, 1000);
+        }
+      });
+    });
+    
+    // ==================== PARALLAX EFFECT ON HERO IMAGE ====================
+    const heroImage = document.querySelector('.hero-image');
+    
+    if (heroImage) {
+      window.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const { innerWidth, innerHeight } = window;
+        
+        const xRotation = ((clientY - innerHeight / 2) / innerHeight) * 10;
+        const yRotation = ((clientX - innerWidth / 2) / innerWidth) * 10;
+        
+        heroImage.style.transform = `rotateX(${-xRotation}deg) rotateY(${yRotation}deg)`;
+      });
+    }
+    
+    // ==================== FORM SUBMISSION ====================
+    const contactForm = document.querySelector('.contact-form');
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! This is a demo form. In production, this would send your message.');
+        contactForm.reset();
+      });
+    }
+    
+    // ==================== ENHANCED SCROLL NAVIGATION ====================
+    // Get all sections for navigation
+    const sections = document.querySelectorAll('.hero, .section');
+    let currentSection = 0;
+    let isScrolling = false;
+    
+    // Function to scroll to a specific section
+    function scrollToSection(index) {
+      if (index >= 0 && index < sections.length) {
+        isScrolling = true;
+        currentSection = index;
+        sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Reset scrolling flag after animation
+        setTimeout(() => {
+          isScrolling = false;
+        }, 1000);
+      }
+    }
+    
+    // Keyboard navigation (Arrow keys and Page Up/Down)
+    document.addEventListener('keydown', (e) => {
+      if (isScrolling) return;
+      
+      // Don't interfere if user is typing in a form
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        e.preventDefault();
+        scrollToSection(currentSection + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        scrollToSection(currentSection - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        scrollToSection(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        scrollToSection(sections.length - 1);
+      }
+    });
+    
+    // Update current section based on scroll position
+    const updateCurrentSection = () => {
+      if (isScrolling) return;
+      
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      
+      sections.forEach((section, index) => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          currentSection = index;
+          
+          // Update active navigation link
+          updateActiveNavLink(section.id);
+        }
+      });
+    };
+    
+    // Function to highlight active navigation link
+    function updateActiveNavLink(sectionId) {
+      // Remove active class from all links
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // Add active class to current section link
+      const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+    
+    window.addEventListener('scroll', updateCurrentSection);
+    
+    // Set initial active link
+    updateActiveNavLink('hero');
+    
+    // ==================== TOUCH SWIPE DETECTION (Mobile) ====================
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    function handleSwipe() {
+      const swipeDistance = touchStartY - touchEndY;
+      const minSwipeDistance = 50; // Minimum distance for swipe
+      
+      if (Math.abs(swipeDistance) > minSwipeDistance) {
+        if (swipeDistance > 0) {
+          // Swipe up - next section
+          scrollToSection(currentSection + 1);
+        } else {
+          // Swipe down - previous section
+          scrollToSection(currentSection - 1);
+        }
+      }
+    }
+    
+    document.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    document.addEventListener('touchend', (e) => {
+      touchEndY = e.changedTouches[0].clientY;
+      handleSwipe();
+    }, { passive: true });
+    
+    // ==================== SCROLL INDICATORS (Optional Visual Hint) ====================
+    // Add subtle scroll hint for users
+    const addScrollHint = () => {
+      const hint = document.createElement('div');
+      hint.className = 'scroll-hint';
+      hint.innerHTML = `
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14m0 0l-7-7m7 7l7-7"/>
+        </svg>
+      `;
+      document.querySelector('.hero').appendChild(hint);
+      
+      // Hide hint after first scroll
+      const hideHint = () => {
+        hint.style.opacity = '0';
+        window.removeEventListener('scroll', hideHint);
+      };
+      
+      setTimeout(() => {
+        window.addEventListener('scroll', hideHint);
+      }, 3000);
+    };
+    
+    // Add scroll hint after page loads
+    window.addEventListener('load', () => {
+      setTimeout(addScrollHint, 1000);
+    });
+  </script>
+  
+  <style>
+    /* Scroll hint animation */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-secondary);
+      animation: bounce 2s infinite;
+      opacity: 0.7;
+      transition: opacity 0.5s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+    
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(10px);
+      }
+    }
+    
+    /* Improve scroll snap on mobile */
+    @media (max-width: 768px) {
+      html {
+        scroll-snap-type: y proximity;
+      }
+    }
+  </style>
+</body>
+</html>
