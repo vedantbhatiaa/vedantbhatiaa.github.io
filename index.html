@@ -947,7 +947,9 @@
     .stagger-4 { animation-delay: 0.4s; }
   
     /* ==================== CUSTOM CURSOR ==================== */
-    * { cursor: none !important; }
+    @media (min-width: 769px) {
+      * { cursor: none !important; }
+    }
 
     .cursor-dot {
       width: 8px;
@@ -957,33 +959,44 @@
       position: fixed;
       top: 0; left: 0;
       pointer-events: none;
-      z-index: 99999;
+      z-index: 2147483647;
       transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+      will-change: left, top;
+    }
+
+    .cursor-dot.hovered {
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
     }
 
     .cursor-ring {
-      width: 36px;
-      height: 36px;
-      border: 1.5px solid rgba(0, 212, 255, 0.6);
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(0, 212, 255, 0.7);
       border-radius: 50%;
       position: fixed;
       top: 0; left: 0;
       pointer-events: none;
-      z-index: 99998;
+      z-index: 2147483646;
       transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, transform 0.12s ease;
+      transition: width 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                  height 0.35s cubic-bezier(0.34,1.56,0.64,1),
+                  border-color 0.3s ease,
+                  border-width 0.3s ease;
+      will-change: left, top;
     }
 
-    /* Expand ring on hoverable elements */
-    a:hover ~ #cursorRing,
-    button:hover ~ #cursorRing {
-      transform: translate(-50%, -50%) scale(1.5);
+    .cursor-ring.hovered {
+      width: 60px;
+      height: 60px;
+      border-color: rgba(0, 102, 255, 0.9);
+      border-width: 2px;
     }
 
     @media (max-width: 768px) {
       .cursor-dot, .cursor-ring { display: none; }
-      * { cursor: auto !important; }
     }
 
   </style>
@@ -1538,51 +1551,49 @@
     </div>
   </section>
   
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script>
     // ==================== CUSTOM CURSOR ====================
-    const cursorDot = document.getElementById('cursorDot');
-    const cursorRing = document.getElementById('cursorRing');
-    let ringX = 0, ringY = 0;
-    let mouseX = 0, mouseY = 0;
+    (function() {
+      const dot  = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorRing');
+      if (!dot || !ring) return;
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
+      let mouseX = 0, mouseY = 0;
+      let ringX  = 0, ringY  = 0;
 
-    // Smooth lagging ring
-    function animateRing() {
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      cursorRing.style.left = ringX + 'px';
-      cursorRing.style.top = ringY + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Hover state — scale ring on links/buttons
-    document.querySelectorAll('a, button, .project-card, .skill-card, .hero-image').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorRing.style.width = '56px';
-        cursorRing.style.height = '56px';
-        cursorRing.style.borderColor = 'rgba(0, 102, 255, 0.8)';
-        cursorDot.style.background = '#0066ff';
-        cursorDot.style.width = '6px';
-        cursorDot.style.height = '6px';
+      // Dot follows cursor exactly
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top  = mouseY + 'px';
       });
-      el.addEventListener('mouseleave', () => {
-        cursorRing.style.width = '36px';
-        cursorRing.style.height = '36px';
-        cursorRing.style.borderColor = 'rgba(0, 212, 255, 0.6)';
-        cursorDot.style.background = '#00d4ff';
-        cursorDot.style.width = '8px';
-        cursorDot.style.height = '8px';
-      });
-    });
 
-  </script><script>
+      // Ring lags behind smoothly
+      (function animateRing() {
+        ringX += (mouseX - ringX) * 0.1;
+        ringY += (mouseY - ringY) * 0.1;
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      })();
+
+      // Hover expand on interactive elements
+      const hoverTargets = 'a, button, .project-card, .skill-card, .hero-image, .timeline-item, .article-card, .featured-research';
+      document.querySelectorAll(hoverTargets).forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          dot.classList.add('hovered');
+          ring.classList.add('hovered');
+        });
+        el.addEventListener('mouseleave', () => {
+          dot.classList.remove('hovered');
+          ring.classList.remove('hovered');
+        });
+      });
+    })();
+  </script>
+  <script>
     // ==================== SCROLL ANIMATIONS ====================
     const observerOptions = {
       threshold: 0.1,
